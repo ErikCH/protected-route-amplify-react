@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 
 function App() {
+  const { route, signOut } = useAuthenticator((context) => [
+    context.route,
+    context.signOut,
+  ]);
+  const navigate = useNavigate();
+
+  function logOut() {
+    signOut();
+    navigate("/login");
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <nav>
+        <button onClick={() => navigate("/")}>Home</button>
+        <button onClick={() => navigate("/protected")}>Protected</button>
+        {route !== "authenticated" ? (
+          <button onClick={() => navigate("/login")}>Login</button>
+        ) : (
+          <button onClick={() => logOut()}>Logout</button>
+        )}
+      </nav>
+      <h1>Welcome To This Sample Route App</h1>
+      <span>
+        {route === "authenticated"
+          ? "You are logged in!"
+          : "You are logged out!"}
+      </span>
+
+      <Outlet />
+    </>
   );
 }
 
