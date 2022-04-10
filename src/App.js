@@ -1,42 +1,47 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Protected } from "./Protected";
+import { RequireAuth } from "./RequireAuth";
+import { Login } from "./Login";
+import { ProtectedSecond } from "./ProtectSecond";
+import { Authenticator } from "@aws-amplify/ui-react";
+import { Home } from "./Home";
+import { Layout } from "./Layout";
 import "./App.css";
-import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useAuthenticator } from "@aws-amplify/ui-react";
+
+function MyRoutes() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route
+            path="/protected"
+            element={
+              <RequireAuth>
+                <Protected />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/protected2"
+            element={
+              <RequireAuth>
+                <ProtectedSecond />
+              </RequireAuth>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
 function App() {
-  const { route, signOut } = useAuthenticator((context) => [
-    context.route,
-    context.signOut,
-  ]);
-  const navigate = useNavigate();
-
-  function logOut() {
-    signOut();
-    navigate("/login");
-  }
   return (
-    <>
-      <nav>
-        <button onClick={() => navigate("/")}>Home</button>
-        <button onClick={() => navigate("/protected")}>Protected</button>
-        <button onClick={() => navigate("/protected2")}>
-          Protected Second
-        </button>
-        {route !== "authenticated" ? (
-          <button onClick={() => navigate("/login")}>Login</button>
-        ) : (
-          <button onClick={() => logOut()}>Logout</button>
-        )}
-      </nav>
-      <h1>Welcome To This Sample Route App</h1>
-      <span>
-        {route === "authenticated"
-          ? "You are logged in!"
-          : "You are logged out!"}
-      </span>
-
-      <Outlet />
-    </>
+    <Authenticator.Provider>
+      <MyRoutes />
+    </Authenticator.Provider>
   );
 }
 
