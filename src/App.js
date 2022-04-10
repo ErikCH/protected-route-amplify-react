@@ -19,6 +19,9 @@ function App() {
       <nav>
         <button onClick={() => navigate("/")}>Home</button>
         <button onClick={() => navigate("/protected")}>Protected</button>
+        <button onClick={() => navigate("/protected2")}>
+          Protected Second
+        </button>
         {route !== "authenticated" ? (
           <button onClick={() => navigate("/login")}>Login</button>
         ) : (
