@@ -1,6 +1,6 @@
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import { useAuthenticator } from "@aws-amplify/ui-react";
+import { useAuthenticator, View } from "@aws-amplify/ui-react";
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 export function Login() {
@@ -14,8 +14,8 @@ export function Login() {
     }
   }, [route, navigate, from]);
   return (
-    <div className="auth-wrapper">
+    <View className="auth-wrapper">
       <Authenticator></Authenticator>
-    </div>
+    </View>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useAuthenticator } from "@aws-amplify/ui-react";
+import { useAuthenticator, Button, Heading, View } from "@aws-amplify/ui-react";
 
 export function Layout() {
   const { route, signOut } = useAuthenticator((context) => [
@@ -16,23 +16,23 @@ export function Layout() {
   return (
     <>
       <nav>
-        <button onClick={() => navigate("/")}>Home</button>
-        <button onClick={() => navigate("/protected")}>
+        <Button onClick={() => navigate("/")}>Home</Button>
+        <Button onClick={() => navigate("/protected")}>
           First Protected Route
-        </button>
-        <button onClick={() => navigate("/protected2")}>
+        </Button>
+        <Button onClick={() => navigate("/protected2")}>
           Second Protected Route
-        </button>
+        </Button>
         {route !== "authenticated" ? (
-          <button onClick={() => navigate("/login")}>Login</button>
+          <Button onClick={() => navigate("/login")}>Login</Button>
         ) : (
-          <button onClick={() => logOut()}>Logout</button>
+          <Button onClick={() => logOut()}>Logout</Button>
         )}
       </nav>
-      <h1>Welcome To This Sample Route App</h1>
-      <span>
+      <Heading level={1}>Example Auth Routes App</Heading>
+      <View>
         {route === "authenticated" ? "You are logged in!" : "Please Login!"}
-      </span>
+      </View>
 
       <Outlet />
     </>
