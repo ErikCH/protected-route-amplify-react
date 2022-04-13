@@ -1,11 +1,14 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Authenticator } from "@aws-amplify/ui-react";
+
 import { Protected } from "./components/Protected";
 import { RequireAuth } from "./RequireAuth";
 import { Login } from "./components/Login";
 import { ProtectedSecond } from "./components/ProtectSecond";
-import { Authenticator } from "@aws-amplify/ui-react";
 import { Home } from "./components/Home";
 import { Layout } from "./components/Layout";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import "./App.css";
 
 function MyRoutes() {
